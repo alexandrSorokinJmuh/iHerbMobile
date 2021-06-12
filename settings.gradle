@@ -1,0 +1,2 @@
+rootProject.name = "iHerb"
+include ':app'
