@@ -1,33 +1,42 @@
 package com.example.iherb.db.entities;
 
+import com.example.iherb.db.database.Column;
+import com.example.iherb.db.database.Entity;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-@DatabaseTable(tableName = "users")
-public class User {
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class User extends Entity {
     @DatabaseField(generatedId = true)
     private int Id;
 
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING)
+    @Column
     private String firstName;
 
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING)
+    @Column
     private String lastName;
 
-    @DatabaseField(dataType = DataType.DATE)
-    private Date dateOfBirth;
+    @Column(type = "integer")
+    private Integer dateOfBirth;
 
-    @DatabaseField(canBeNull = false, unique = true, dataType = DataType.STRING)
+    @Column
     private String login;
 
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING)
+    @Column
     private String password;
 
 
-    public User(String firstName, String lastName, Date dateOfBirth, String login, String password, String sex) {
+    @Column
+    private String sex;
+
+    public User(String firstName, String lastName, Integer dateOfBirth, String login, String password, String sex) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -35,8 +44,4 @@ public class User {
         this.password = password;
         this.sex = sex;
     }
-
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING)
-    private String sex;
-
 }

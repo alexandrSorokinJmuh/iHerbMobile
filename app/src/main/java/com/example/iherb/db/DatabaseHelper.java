@@ -2,6 +2,9 @@ package com.example.iherb.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 
 import com.example.iherb.db.dao.AchievementConditionDao;
@@ -18,6 +21,7 @@ import com.example.iherb.db.dao.PillDao;
 import com.example.iherb.db.dao.UsePillDao;
 import com.example.iherb.db.dao.UserAchievementDao;
 import com.example.iherb.db.dao.UserDao;
+import com.example.iherb.db.database.TableResolver;
 import com.example.iherb.db.entities.Achievement;
 import com.example.iherb.db.entities.AchievementCondition;
 import com.example.iherb.db.entities.Classification;
@@ -37,8 +41,10 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
@@ -63,168 +69,173 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private ContraindicationDao contraindicationDao = null;
     private ContraindicationPillDao contraindicationPillDao = null;
     private EffectPillDao effectPillDao = null;
+    private SQLiteDatabase db;
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    //Выполняется, когда файл с БД не найден на устройстве
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource){
-        try
-        {
-            TableUtils.createTable(connectionSource, User.class);
-            TableUtils.createTable(connectionSource, Achievement.class);
-            TableUtils.createTable(connectionSource, UserAchievement.class);
-            TableUtils.createTable(connectionSource, Classification.class);
-            TableUtils.createTable(connectionSource, Pill.class);
-            TableUtils.createTable(connectionSource, Param.class);
-            TableUtils.createTable(connectionSource, ParamValue.class);
-            TableUtils.createTable(connectionSource, History.class);
-            TableUtils.createTable(connectionSource, AchievementCondition.class);
-            TableUtils.createTable(connectionSource, Effect.class);
-            TableUtils.createTable(connectionSource, UsePill.class);
-            TableUtils.createTable(connectionSource, Contraindication.class);
-            TableUtils.createTable(connectionSource, ContraindicationPill.class);
-            TableUtils.createTable(connectionSource, EffectPill.class);
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL(TableResolver.getSqlCreateTableString(Achievement.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(AchievementCondition.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(Classification.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(Contraindication.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(ContraindicationPill.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(Effect.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(EffectPill.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(History.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(Param.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(ParamValue.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(Pill.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(UsePill.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(User.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(UserAchievement.class));
 
-        }
-        catch (SQLException e){
-            Log.e(TAG, "error creating DB " + DATABASE_NAME);
-            throw new RuntimeException(e);
+
+
+
+
+    }
+
+    public void addStartValues(){
+        List<Param> paramList = new ArrayList<>();
+        paramList.add(new Param("weight", "user weight"));
+        paramList.add(new Param("pulse", "user pulse"));
+        paramList.add(new Param("height", "user height"));
+
+        List<Classification> classificationList = new ArrayList<>();
+        classificationList.add(new Classification("нутрицевтики", "комбинированные средства, прием которых показан при дефиците полезных веществ и спровоцированных им сбоях в работе организма, а также для ускорения эвакуации чужеродных органических и неорганических соединений"));
+        classificationList.add(new Classification("парафармацевтики", "биоактивные добавки, используемые для повышения умственной и физической работоспособности, укрепления иммунитета"));
+        classificationList.add(new Classification("эубиотики", "БАД, содержащие живые культуры бактерий и (или) питательный субстрат для них, применяемые для восстановления микробиоценоза кишечника и тд."));
+
+
+        for (Param param : paramList)
+            getParamDao().create(param);
+
+        for (Classification classification : classificationList){
+            getClassificationDao().create(classification);
         }
     }
 
-    //Выполняется, когда БД имеет версию отличную от текущей
     @Override
-    public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
-                          int newVer){
-        try{
-            //Так делают ленивые, гораздо предпочтительнее не удаляя БД аккуратно вносить изменения
-            TableUtils.dropTable(connectionSource, User.class, true);
-            TableUtils.dropTable(connectionSource, Achievement.class, true);
-            TableUtils.dropTable(connectionSource, UserAchievement.class, true);
-            TableUtils.dropTable(connectionSource, Classification.class, true);
-            TableUtils.dropTable(connectionSource, Pill.class, true);
-            TableUtils.dropTable(connectionSource, Param.class, true);
-            TableUtils.dropTable(connectionSource, ParamValue.class, true);
-            TableUtils.dropTable(connectionSource, History.class, true);
-            TableUtils.dropTable(connectionSource, AchievementCondition.class, true);
-            TableUtils.dropTable(connectionSource, Effect.class, true);
-            TableUtils.dropTable(connectionSource, UsePill.class, true);
-            TableUtils.dropTable(connectionSource, Contraindication.class, true);
-            TableUtils.dropTable(connectionSource, ContraindicationPill.class, true);
-            TableUtils.dropTable(connectionSource, EffectPill.class, true);
-            onCreate(db, connectionSource);
-        }
-        catch (SQLException e){
-            Log.e(TAG,"error upgrading db "+DATABASE_NAME+"from ver "+oldVer);
-            throw new RuntimeException(e);
-        }
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+
     }
 
-    //синглтон для UserDao
-    public UserDao getUserDao() throws SQLException{
-        if(userDao == null){
-            userDao = new UserDao(getConnectionSource(), User.class);
-        }
-        return userDao;
-    }
-
-    //синглтон для AchievementDao
-    public AchievementDao getAchievementDao() throws SQLException{
-        if(achievementDao == null){
-            achievementDao = new AchievementDao(getConnectionSource(), Achievement.class);
-        }
-        return achievementDao;
-    }
-    //синглтон для UserAchievementDao
-    public UserAchievementDao getUserAchievementDao() throws SQLException{
-        if(userAchievementDao == null){
-            userAchievementDao = new UserAchievementDao(getConnectionSource(), UserAchievement.class);
-        }
-        return userAchievementDao;
-    }
-
-    //синглтон для AchievementConditionDao
-    public AchievementConditionDao getAchievementConditionDao() throws SQLException{
-        if(achievementConditionDao == null){
-            achievementConditionDao = new AchievementConditionDao(getConnectionSource(), AchievementCondition.class);
-        }
+    public AchievementConditionDao getAchievementConditionDao() {
         return achievementConditionDao;
     }
 
-    //синглтон для ClassificationDao
-    public ClassificationDao getClassificationDao() throws SQLException{
-        if(classificationDao == null){
-            classificationDao = new ClassificationDao(getConnectionSource(), Classification.class);
-        }
+    public void setAchievementConditionDao(AchievementConditionDao achievementConditionDao) {
+        this.achievementConditionDao = achievementConditionDao;
+    }
+
+    public ClassificationDao getClassificationDao() {
         return classificationDao;
     }
 
-    //синглтон для EffectDao
-    public EffectDao getEffectDao() throws SQLException{
-        if(effectDao == null){
-            effectDao = new EffectDao(getConnectionSource(), Effect.class);
-        }
+    public void setClassificationDao(ClassificationDao classificationDao) {
+        this.classificationDao = classificationDao;
+    }
+
+    public EffectDao getEffectDao() {
         return effectDao;
     }
 
-    //синглтон для HistoryDao
-    public HistoryDao getHistoryDao() throws SQLException{
-        if(historyDao == null){
-            historyDao = new HistoryDao(getConnectionSource(), History.class);
-        }
+    public void setEffectDao(EffectDao effectDao) {
+        this.effectDao = effectDao;
+    }
+
+    public HistoryDao getHistoryDao() {
         return historyDao;
     }
 
-    //синглтон для ParamDao
-    public ParamDao getParamDao() throws SQLException{
-        if(paramDao == null){
-            paramDao = new ParamDao(getConnectionSource(), Param.class);
-        }
+    public void setHistoryDao(HistoryDao historyDao) {
+        this.historyDao = historyDao;
+    }
+
+    public ParamDao getParamDao() {
         return paramDao;
     }
 
-    //синглтон для PillDao
-    public PillDao getPillDao() throws SQLException{
-        if(pillDao == null){
-            pillDao = new PillDao(getConnectionSource(), Pill.class);
-        }
+    public void setParamDao(ParamDao paramDao) {
+        this.paramDao = paramDao;
+    }
+
+    public ParamValueDao getParamValueDao() {
+        return paramValueDao;
+    }
+
+    public void setParamValueDao(ParamValueDao paramValueDao) {
+        this.paramValueDao = paramValueDao;
+    }
+
+    public PillDao getPillDao() {
         return pillDao;
     }
 
-    //синглтон для UsePillDao
-    public UsePillDao getUsePillDao() throws SQLException{
-        if(usePillDao == null){
-            usePillDao = new UsePillDao(getConnectionSource(), UsePill.class);
-        }
+    public void setPillDao(PillDao pillDao) {
+        this.pillDao = pillDao;
+    }
+
+    public UsePillDao getUsePillDao() {
         return usePillDao;
     }
 
-    //синглтон для ContraindicationDao
-    public ContraindicationDao getContraindicationDao() throws SQLException{
-        if(contraindicationDao == null){
-            contraindicationDao = new ContraindicationDao(getConnectionSource(), Contraindication.class);
-        }
+    public void setUsePillDao(UsePillDao usePillDao) {
+        this.usePillDao = usePillDao;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
+
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    public AchievementDao getAchievementDao() {
+        return achievementDao;
+    }
+
+    public void setAchievementDao(AchievementDao achievementDao) {
+        this.achievementDao = achievementDao;
+    }
+
+    public UserAchievementDao getUserAchievementDao() {
+        return userAchievementDao;
+    }
+
+    public void setUserAchievementDao(UserAchievementDao userAchievementDao) {
+        this.userAchievementDao = userAchievementDao;
+    }
+
+    public ContraindicationDao getContraindicationDao() {
         return contraindicationDao;
     }
 
-    //синглтон для ContraindicationPillDao
-    public ContraindicationPillDao getContraindicationPillDao() throws SQLException{
-        if(contraindicationPillDao == null){
-            contraindicationPillDao = new ContraindicationPillDao(getConnectionSource(), ContraindicationPill.class);
-        }
+    public void setContraindicationDao(ContraindicationDao contraindicationDao) {
+        this.contraindicationDao = contraindicationDao;
+    }
+
+    public ContraindicationPillDao getContraindicationPillDao() {
         return contraindicationPillDao;
     }
 
-    //синглтон для effectPillDao
-    public EffectPillDao getEffectPillDao() throws SQLException{
-        if(effectPillDao == null){
-            effectPillDao = new EffectPillDao(getConnectionSource(), EffectPill.class);
-        }
+    public void setContraindicationPillDao(ContraindicationPillDao contraindicationPillDao) {
+        this.contraindicationPillDao = contraindicationPillDao;
+    }
+
+    public EffectPillDao getEffectPillDao() {
         return effectPillDao;
     }
+
+    public void setEffectPillDao(EffectPillDao effectPillDao) {
+        this.effectPillDao = effectPillDao;
+    }
+
     //выполняется при закрытии приложения
     @Override
     public void close(){
@@ -243,7 +254,8 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         contraindicationDao = null;
         contraindicationPillDao = null;
         effectPillDao = null;
-//        roleDao = null;
     }
+
+
 }
 
