@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerListView.setAdapter(adapter);
         mDrawerListView.setOnItemClickListener(new ItemClickListener());
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         mDrawerLayout.addDrawerListener(mDrawerToggle);
         setupDrawerToggle();
 
