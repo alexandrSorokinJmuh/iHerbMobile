@@ -5,7 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
+import android.view.View;
 
 import com.example.iherb.R;
 
@@ -39,9 +41,17 @@ public class NotificationCreator {
         }else {
             notificationBuilder.setContentText(description);
         }
+        notificationBuilder
+                .setBadgeIconType(R.drawable.ic_launcher_foreground);
+
         Notification notification = notificationBuilder.build();
         notificationManager.notify(notificationId, notification);
 
 
+    }
+
+    public static void createSnackBar(View view, String text, int duration){
+        Snackbar snackbar = Snackbar.make(view, text, duration);
+        snackbar.show();
     }
 }

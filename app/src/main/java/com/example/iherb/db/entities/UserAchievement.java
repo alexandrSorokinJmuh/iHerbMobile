@@ -1,22 +1,29 @@
 package com.example.iherb.db.entities;
 
+import com.example.iherb.db.database.Column;
+import com.example.iherb.db.database.Entity;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.util.Date;
 
-@DatabaseTable(tableName = "user_achievements")
-public class UserAchievement { 
-    @DatabaseField(foreign = true, id = true, uniqueCombo=true)
-    User user;
-    @DatabaseField(foreign = true, id = true, uniqueCombo=true)
-    Achievement achievement;
-    @DatabaseField(dataType = DataType.DATE_TIME)
-    private Date dateSuccess;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    public UserAchievement(User user, Achievement achievement) {
-        this.user = user;
-        this.achievement = achievement;
+@Data
+@NoArgsConstructor
+public class UserAchievement extends Entity {
+    @Column(type = "integer", reference = "FOREIGN KEY (user_id) REFERENCES user(id)")
+    Integer user_id;
+    @Column(type = "integer", reference = "FOREIGN KEY (achievement_id) REFERENCES achievement(id), primary key (user_id, achievement_id)")
+    Integer achievement_id;
+    @Column
+    private Integer dateSuccess;
+
+    public UserAchievement(Integer user_id, Integer achievement_id, Integer dateSuccess) {
+        this.user_id = user_id;
+        this.achievement_id = achievement_id;
+        this.dateSuccess = dateSuccess;
     }
 }
