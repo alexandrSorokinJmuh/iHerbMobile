@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHerb">
         <activity android:name=".Calendar"></activity>
+        <activity android:name=".EntryActivity"></activity>
         <activity android:name=".Main3Activity" />
         <activity android:name=".Register" />
         <activity android:name=".Signin" />
