@@ -23,7 +23,7 @@ public class Signin extends AppCompatActivity {
             DatabaseHelper databaseHelper = HelperFactory.getHelper();
         }
 
-        public void signinButtonClick(View view) {
+        /*public void signinButtonClick(View view) {
             EditText login = (EditText)findViewById(R.id.editTextLoginSignin);
             EditText password = (EditText)findViewById(R.id.editTextPasswordSignin);
 
@@ -45,5 +45,5 @@ public class Signin extends AppCompatActivity {
 
                 else return;
 
-        }
+        }*/
 }
