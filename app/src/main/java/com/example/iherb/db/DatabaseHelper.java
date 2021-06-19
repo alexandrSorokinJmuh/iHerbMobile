@@ -7,7 +7,10 @@ import android.util.Log;
 import com.example.iherb.db.dao.AchievementConditionDao;
 import com.example.iherb.db.dao.AchievementDao;
 import com.example.iherb.db.dao.ClassificationDao;
+import com.example.iherb.db.dao.ContraindicationDao;
+import com.example.iherb.db.dao.ContraindicationPillDao;
 import com.example.iherb.db.dao.EffectDao;
+import com.example.iherb.db.dao.EffectPillDao;
 import com.example.iherb.db.dao.HistoryDao;
 import com.example.iherb.db.dao.ParamDao;
 import com.example.iherb.db.dao.ParamValueDao;
@@ -18,7 +21,10 @@ import com.example.iherb.db.dao.UserDao;
 import com.example.iherb.db.entities.Achievement;
 import com.example.iherb.db.entities.AchievementCondition;
 import com.example.iherb.db.entities.Classification;
+import com.example.iherb.db.entities.Contraindication;
+import com.example.iherb.db.entities.ContraindicationPill;
 import com.example.iherb.db.entities.Effect;
+import com.example.iherb.db.entities.EffectPill;
 import com.example.iherb.db.entities.History;
 import com.example.iherb.db.entities.Param;
 import com.example.iherb.db.entities.ParamValue;
@@ -54,6 +60,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private UserDao userDao = null;
     private AchievementDao achievementDao = null;
     private UserAchievementDao userAchievementDao = null;
+    private ContraindicationDao contraindicationDao = null;
+    private ContraindicationPillDao contraindicationPillDao = null;
+    private EffectPillDao effectPillDao = null;
 
     public DatabaseHelper(Context context){
         super(context,DATABASE_NAME, null, DATABASE_VERSION);
@@ -75,6 +84,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, AchievementCondition.class);
             TableUtils.createTable(connectionSource, Effect.class);
             TableUtils.createTable(connectionSource, UsePill.class);
+            TableUtils.createTable(connectionSource, Contraindication.class);
+            TableUtils.createTable(connectionSource, ContraindicationPill.class);
+            TableUtils.createTable(connectionSource, EffectPill.class);
 
         }
         catch (SQLException e){
@@ -100,7 +112,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, AchievementCondition.class, true);
             TableUtils.dropTable(connectionSource, Effect.class, true);
             TableUtils.dropTable(connectionSource, UsePill.class, true);
-
+            TableUtils.dropTable(connectionSource, Contraindication.class, true);
+            TableUtils.dropTable(connectionSource, ContraindicationPill.class, true);
+            TableUtils.dropTable(connectionSource, EffectPill.class, true);
             onCreate(db, connectionSource);
         }
         catch (SQLException e){
@@ -188,6 +202,29 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return usePillDao;
     }
 
+    //синглтон для ContraindicationDao
+    public ContraindicationDao getContraindicationDao() throws SQLException{
+        if(contraindicationDao == null){
+            contraindicationDao = new ContraindicationDao(getConnectionSource(), Contraindication.class);
+        }
+        return contraindicationDao;
+    }
+
+    //синглтон для ContraindicationPillDao
+    public ContraindicationPillDao getContraindicationPillDao() throws SQLException{
+        if(contraindicationPillDao == null){
+            contraindicationPillDao = new ContraindicationPillDao(getConnectionSource(), ContraindicationPill.class);
+        }
+        return contraindicationPillDao;
+    }
+
+    //синглтон для effectPillDao
+    public EffectPillDao getEffectPillDao() throws SQLException{
+        if(effectPillDao == null){
+            effectPillDao = new EffectPillDao(getConnectionSource(), EffectPill.class);
+        }
+        return effectPillDao;
+    }
     //выполняется при закрытии приложения
     @Override
     public void close(){
@@ -203,6 +240,9 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         paramValueDao = null;
         pillDao = null;
         usePillDao = null;
+        contraindicationDao = null;
+        contraindicationPillDao = null;
+        effectPillDao = null;
 //        roleDao = null;
     }
 }
