@@ -4,10 +4,13 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
+import android.widget.RemoteViews;
 
 import com.example.iherb.R;
 
@@ -32,22 +35,43 @@ public class NotificationCreator {
 
     public void createNotification(Context context, String header, String description, int notificationId){
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)
-                .setContentTitle(header);
-        if (description.length() > MAX_CHAR_LENGTH) {
-            notificationBuilder.setContentText(description.substring(0, MAX_CHAR_LENGTH) + "...");
-            notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(description));
-        }else {
-            notificationBuilder.setContentText(description);
-        }
-        notificationBuilder
-                .setAutoCancel(true)
-                .setBadgeIconType(R.drawable.ic_launcher_foreground);
+//        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+//                .setSmallIcon(R.drawable.ic_launcher_foreground)
+//                .setContentTitle(header);
+//        if (description.length() > MAX_CHAR_LENGTH) {
+//            notificationBuilder.setContentText(description.substring(0, MAX_CHAR_LENGTH) + "...");
+//            notificationBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(description));
+//        }else {
+//            notificationBuilder.setContentText(description);
+//        }
+//        notificationBuilder
+//                .setLargeIcon(BitmapFactory.decodeResource(Resources.getSystem(),
+//                        R.drawable.ic_launcher_foreground))
+//                .setAutoCancel(true)
+//                .setColor(Color.GREEN)
+//                .setBadgeIconType(R.drawable.ic_launcher_foreground);
+//
+//        Notification notification = notificationBuilder.build();
+//        notificationManager.notify(notificationId, notification);
 
-        Notification notification = notificationBuilder.build();
-        notificationManager.notify(notificationId, notification);
+        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_push);
+        contentView.setImageViewResource(R.id.image, R.mipmap.ic_prop1_round);
+        contentView.setTextViewText(R.id.title, header);
+        contentView.setTextViewText(R.id.text, description);
 
+
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_prop1_round)
+                .setContent(contentView);
+
+
+
+        Notification notification = mBuilder.build();
+        notification.bigContentView = contentView;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        notification.defaults |= Notification.DEFAULT_SOUND;
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+        notificationManager.notify(1, notification);
 
     }
 

@@ -16,6 +16,7 @@ import com.example.iherb.db.entities.History;
 import com.example.iherb.db.entities.Param;
 import com.example.iherb.db.entities.ParamValue;
 import com.example.iherb.db.entities.User;
+import com.example.iherb.db.entities.UserAchievement;
 import com.example.iherb.notification.NotificationCreator;
 
 import java.text.ParseException;
@@ -56,9 +57,9 @@ public class Register extends AppCompatActivity {
         User user = new User(firstName.getText().toString(), lastName.getText().toString(), date, login.getText().toString(), password.getText().toString(), sex.getText().toString());
 
 
-
+        int userId = -1;
         try {
-            int userId = (int)HelperFactory.getHelper().getUserDao().create(user);
+            userId = (int)HelperFactory.getHelper().getUserDao().create(user);
 
             Param weightParam = HelperFactory.getHelper().getParamDao().getByName("weight");
             Param heightParam = HelperFactory.getHelper().getParamDao().getByName("height");
@@ -95,6 +96,8 @@ public class Register extends AppCompatActivity {
         NotificationCreator notificationCreator = new NotificationCreator(notificationManager, "achievements", "Достижения",
                 "Достижения приложения");
         Achievement achievement = HelperFactory.getHelper().getAchievementDao().getByName("Добро пожаловать");
+        UserAchievement userAchievement = new UserAchievement(userId, achievement.getId(), 1);
+        HelperFactory.getHelper().getUserAchievementDao().create(userAchievement);
         notificationCreator.createNotification(this, achievement.getName(), achievement.getDescription(), 1);
         intent.putExtra("user", user);
         startActivity(intent);
