@@ -1,5 +1,6 @@
 package com.example.iherb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -42,11 +43,16 @@ public class Register extends AppCompatActivity {
         public void registerButtonClick(View view) {
             int date = (int)birthDateCalendar.getDate();
 
+            User user = new User(firstName.getText().toString(), lastName.getText().toString(), date, login.getText().toString(), password.getText().toString(), sex.getText().toString());
+
             try {
-                HelperFactory.getHelper().getUserDao().create(new User(firstName.getText().toString(), lastName.getText().toString(), date, login.getText().toString(), password.getText().toString(), sex.getText().toString()));
+                HelperFactory.getHelper().getUserDao().create(user);
             }catch (Exception e){
 
             }
 
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("user", user);
+            startActivity(intent);
         }
 }

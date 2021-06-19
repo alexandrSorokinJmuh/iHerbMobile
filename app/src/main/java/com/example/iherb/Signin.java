@@ -1,5 +1,6 @@
 package com.example.iherb;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -43,5 +44,9 @@ public class Signin extends AppCompatActivity {
                 user = loginingUser;
             }else return;
 
+
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra("User", user);
+            startActivity(intent);
         }
 }
