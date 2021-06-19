@@ -11,6 +11,8 @@ import com.example.iherb.db.HelperFactory;
 import com.example.iherb.db.dao.UserDao;
 import com.example.iherb.db.entities.User;
 
+import java.text.ParseException;
+
 public class Register extends AppCompatActivity {
     EditText firstName;
     EditText lastName;
@@ -34,11 +36,17 @@ public class Register extends AppCompatActivity {
             login = findViewById(R.id.editTextLoginRegister);
             password = findViewById(R.id.editTextPasswordRegister);
             sex = findViewById(R.id.editTextSex);
+
         }
 
         public void registerButtonClick(View view) {
+            int date = (int)birthDateCalendar.getDate();
 
+            try {
+                HelperFactory.getHelper().getUserDao().create(new User(firstName.getText().toString(), lastName.getText().toString(), date, login.getText().toString(), password.getText().toString(), sex.getText().toString()));
+            }catch (Exception e){
 
-            HelperFactory.getHelper().getUserDao().create(new User(firstName.getText().toString(), lastName.getText().toString(), ));
+            }
+
         }
 }

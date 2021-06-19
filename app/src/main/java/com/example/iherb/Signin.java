@@ -23,27 +23,25 @@ public class Signin extends AppCompatActivity {
             DatabaseHelper databaseHelper = HelperFactory.getHelper();
         }
 
-        /*public void signinButtonClick(View view) {
+        public void signinButtonClick(View view) {
             EditText login = (EditText)findViewById(R.id.editTextLoginSignin);
             EditText password = (EditText)findViewById(R.id.editTextPasswordSignin);
 
-            User loginingUser;
-            boolean isUserExists = false;
+            User loginingUser = null;
             try {
-                isUserExists = HelperFactory.getHelper().getUserDao().checkUserExisting(login.getText().toString());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+                loginingUser = HelperFactory.getHelper().getUserDao().getUserByLogin(login.getText().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
-            if(isUserExists) {
+            if(loginingUser != null) {
                 try {
-                   user = HelperFactory.getHelper().getUserDao().getUserByLoginAndPassword(login.getText().toString(), password.getText().toString());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                   user = HelperFactory.getHelper().getUserDao().getUserByLoginAndPass(login.getText().toString(), password.getText().toString());
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            }
+                user = loginingUser;
+            }else return;
 
-                else return;
-
-        }*/
+        }
 }

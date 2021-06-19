@@ -75,4 +75,55 @@ public class UserDao implements Serializable {
         return db.delete(tableName, "id = " + id,
                 null);
     }
+
+    public User getUserByLogin(String login) {
+        String table = String.format("%s as user", tableName);
+        String[] columns = {"user.id as id", "user.firstName as firstName", "user.lastName as lastName", "user.dateOfBirth as dateOfBirth", "user.login as login", "user.password", "user.sex as sex"};
+        String selection = "user.firstName = ?";
+        String[] selectionArgs = {login};
+        Cursor c = db.query(table, columns, selection, selectionArgs, null, null, "id");
+
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        User user = null;
+        if (c.moveToFirst()) {
+            user = new User();
+            user.setId(c.getInt(c.getColumnIndex("id")));
+            user.setFirstName(c.getString(c.getColumnIndex("firstName")));
+            user.setLastName(c.getString(c.getColumnIndex("lastName")));
+            user.setDateOfBirth(c.getInt(c.getColumnIndex("dateOfBirth")));
+            user.setLogin(c.getString(c.getColumnIndex("login")));
+            user.setPassword(c.getString(c.getColumnIndex("password")));
+            user.setSex(c.getString(c.getColumnIndex("sex")));
+        }
+        c.close();
+        return user;
+    }
+
+    public User getUserByLoginAndPass(String login, String password) {
+        String table = String.format("%s as user", tableName);
+        String[] columns = {"user.id as id", "user.firstName as firstName", "user.lastName as lastName", "user.dateOfBirth as dateOfBirth", "user.login as login", "user.password", "user.sex as sex"};
+        String selection = "user.firstName = ? and user.password = ?";
+        String[] selectionArgs = {login, password};
+        Cursor c = db.query(table, columns, selection, selectionArgs, null, null, "id");
+
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        User user = null;
+        if (c.moveToFirst()) {
+            user = new User();
+            user.setId(c.getInt(c.getColumnIndex("id")));
+            user.setFirstName(c.getString(c.getColumnIndex("firstName")));
+            user.setLastName(c.getString(c.getColumnIndex("lastName")));
+            user.setDateOfBirth(c.getInt(c.getColumnIndex("dateOfBirth")));
+            user.setLogin(c.getString(c.getColumnIndex("login")));
+            user.setPassword(c.getString(c.getColumnIndex("password")));
+            user.setSex(c.getString(c.getColumnIndex("sex")));
+        }
+        c.close();
+        return user;
+    }
+
 }
