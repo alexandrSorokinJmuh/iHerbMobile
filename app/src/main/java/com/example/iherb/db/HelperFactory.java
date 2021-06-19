@@ -1,5 +1,6 @@
 package com.example.iherb.db;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
@@ -18,6 +19,10 @@ import com.example.iherb.db.dao.UsePillDao;
 import com.example.iherb.db.dao.UserAchievementDao;
 import com.example.iherb.db.dao.UserDao;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class HelperFactory{
 
@@ -48,5 +53,17 @@ public class HelperFactory{
     public static void releaseHelper(){
         OpenHelperManager.releaseHelper();
         databaseHelper = null;
+    }
+
+
+    @SuppressLint("SimpleDateFormat")
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
+    public static String getDateFormat(Long date){
+        return simpleDateFormat.format(new Date(date));
+    }
+
+    public static Date getDateFromString(String date) throws ParseException {
+        return simpleDateFormat.parse(date);
     }
 }

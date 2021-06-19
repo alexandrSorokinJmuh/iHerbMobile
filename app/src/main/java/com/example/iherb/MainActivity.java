@@ -1,23 +1,31 @@
 package com.example.iherb;
 
 import android.app.NotificationManager;
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.iherb.db.DatabaseHelper;
 import com.example.iherb.db.HelperFactory;
+import com.example.iherb.db.entities.History;
+import com.example.iherb.db.entities.ParamValue;
+import com.example.iherb.db.entities.User;
 import com.example.iherb.notification.NotificationCreator;
 
 import java.sql.SQLException;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     NotificationCreator notificationCreator;
     View view;
     LinearLayout addWeightLayout;
     LinearLayout addPulseLayout;
+    EditText weightEditText;
+    EditText pulseEditText;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
                 new NotificationCreator(notificationManager, "test_channel_id", "channel_name", "channel_description");
         addWeightLayout = findViewById(R.id.addWeightLayout);
         addPulseLayout = findViewById(R.id.addPulseLayout);
+        weightEditText = findViewById(R.id.weightNumber);
+        pulseEditText = findViewById(R.id.pulseNumber);
+        user = new User("алёша", "помоги", 233123, "asd", "asd", "м");
+
     }
 
     public void showNotification(View view){
@@ -46,6 +58,22 @@ public class MainActivity extends AppCompatActivity {
         addPulseLayout.setVisibility(View.VISIBLE);
     }
 
+    public void addWeight(View view){
+        String weight = weightEditText.getText().toString();
+        int weightId = HelperFactory.getHelper().getParamDao().getByName("weight").getId();
+        long pvId = HelperFactory.getHelper().getParamValueDao().create(new ParamValue(weight));
+        History history = new History(user.getId(), weightId, (int)pvId, (int)Calendar.getInstance().getTime().getTime());
+        HelperFactory.getHelper().getHistoryDao().create(history);
+
+    }
+    public void addPulse(View view){
+        String pulse = pulseEditText.getText().toString();
+        int pulseId = HelperFactory.getHelper().getParamDao().getByName("pulse").getId();
+        long pvId = HelperFactory.getHelper().getParamValueDao().create(new ParamValue(pulse));
+        History history = new History(user.getId(), pulseId, (int)pvId, (int)Calendar.getInstance().getTime().getTime());
+        HelperFactory.getHelper().getHistoryDao().create(history);
+
+    }
     public void showSnackBar(View view) throws SQLException {
         NotificationCreator.createSnackBar(view, HelperFactory.getHelper().getParamDao().getByName("weight").toString(), Snackbar.LENGTH_SHORT);
     }
