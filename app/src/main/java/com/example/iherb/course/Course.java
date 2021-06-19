@@ -1,6 +1,6 @@
 package com.example.iherb.course;
 
-import com.example.iherb.achievements.Achievement;
+import com.example.iherb.db.entities.Achievement;
 
 import java.util.ArrayList;
 import java.util.List;
