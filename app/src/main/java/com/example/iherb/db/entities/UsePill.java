@@ -10,4 +10,8 @@ public class UsePill {
     @DatabaseField(id = true, foreign = true, uniqueCombo = true)
     Pill pill;
 
+    public UsePill(ParamValue paramValue, Pill pill) {
+        this.paramValue = paramValue;
+        this.pill = pill;
+    }
 }

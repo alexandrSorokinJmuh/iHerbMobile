@@ -13,4 +13,9 @@ public class Classification {
     String name;
     @DatabaseField(canBeNull = false, dataType = DataType.STRING)
     String description;
+
+    public Classification(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

@@ -12,8 +12,7 @@ public class ParamValue {
     @DatabaseField(canBeNull = false, dataType = DataType.STRING)
     private String value;
 
-    public ParamValue(int id, String value) {
-        Id = id;
+    public ParamValue(String value) {
         this.value = value;
     }
 }

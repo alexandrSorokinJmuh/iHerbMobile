@@ -15,8 +15,7 @@ public class Param {
     @DatabaseField(canBeNull = false, dataType = DataType.STRING)
     private String description;
 
-    public Param(int id, String name, String description) {
-        Id = id;
+    public Param(String name, String description) {
         this.name = name;
         this.description = description;
     }

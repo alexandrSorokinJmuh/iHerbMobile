@@ -4,10 +4,26 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.iherb.db.dao.AchievementConditionDao;
 import com.example.iherb.db.dao.AchievementDao;
+import com.example.iherb.db.dao.ClassificationDao;
+import com.example.iherb.db.dao.EffectDao;
+import com.example.iherb.db.dao.HistoryDao;
+import com.example.iherb.db.dao.ParamDao;
+import com.example.iherb.db.dao.ParamValueDao;
+import com.example.iherb.db.dao.PillDao;
+import com.example.iherb.db.dao.UsePillDao;
 import com.example.iherb.db.dao.UserAchievementDao;
 import com.example.iherb.db.dao.UserDao;
 import com.example.iherb.db.entities.Achievement;
+import com.example.iherb.db.entities.AchievementCondition;
+import com.example.iherb.db.entities.Classification;
+import com.example.iherb.db.entities.Effect;
+import com.example.iherb.db.entities.History;
+import com.example.iherb.db.entities.Param;
+import com.example.iherb.db.entities.ParamValue;
+import com.example.iherb.db.entities.Pill;
+import com.example.iherb.db.entities.UsePill;
 import com.example.iherb.db.entities.User;
 import com.example.iherb.db.entities.UserAchievement;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
@@ -27,6 +43,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     //ссылки на DAO соответсвующие сущностям, хранимым в БД
+    private AchievementConditionDao achievementConditionDao = null;
+    private ClassificationDao classificationDao = null;
+    private EffectDao effectDao = null;
+    private HistoryDao historyDao = null;
+    private ParamDao paramDao = null;
+    private ParamValueDao paramValueDao = null;
+    private PillDao pillDao = null;
+    private UsePillDao usePillDao = null;
     private UserDao userDao = null;
     private AchievementDao achievementDao = null;
     private UserAchievementDao userAchievementDao = null;
@@ -43,6 +67,15 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, User.class);
             TableUtils.createTable(connectionSource, Achievement.class);
             TableUtils.createTable(connectionSource, UserAchievement.class);
+            TableUtils.createTable(connectionSource, Classification.class);
+            TableUtils.createTable(connectionSource, Pill.class);
+            TableUtils.createTable(connectionSource, Param.class);
+            TableUtils.createTable(connectionSource, ParamValue.class);
+            TableUtils.createTable(connectionSource, History.class);
+            TableUtils.createTable(connectionSource, AchievementCondition.class);
+            TableUtils.createTable(connectionSource, Effect.class);
+            TableUtils.createTable(connectionSource, UsePill.class);
+
         }
         catch (SQLException e){
             Log.e(TAG, "error creating DB " + DATABASE_NAME);
@@ -59,6 +92,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, User.class, true);
             TableUtils.dropTable(connectionSource, Achievement.class, true);
             TableUtils.dropTable(connectionSource, UserAchievement.class, true);
+            TableUtils.dropTable(connectionSource, Classification.class, true);
+            TableUtils.dropTable(connectionSource, Pill.class, true);
+            TableUtils.dropTable(connectionSource, Param.class, true);
+            TableUtils.dropTable(connectionSource, ParamValue.class, true);
+            TableUtils.dropTable(connectionSource, History.class, true);
+            TableUtils.dropTable(connectionSource, AchievementCondition.class, true);
+            TableUtils.dropTable(connectionSource, Effect.class, true);
+            TableUtils.dropTable(connectionSource, UsePill.class, true);
 
             onCreate(db, connectionSource);
         }
@@ -83,13 +124,70 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
         return achievementDao;
     }
-    //синглтон для GoalDAO
+    //синглтон для UserAchievementDao
     public UserAchievementDao getUserAchievementDao() throws SQLException{
         if(userAchievementDao == null){
             userAchievementDao = new UserAchievementDao(getConnectionSource(), UserAchievement.class);
         }
         return userAchievementDao;
     }
+
+    //синглтон для AchievementConditionDao
+    public AchievementConditionDao getAchievementConditionDao() throws SQLException{
+        if(achievementConditionDao == null){
+            achievementConditionDao = new AchievementConditionDao(getConnectionSource(), AchievementCondition.class);
+        }
+        return achievementConditionDao;
+    }
+
+    //синглтон для ClassificationDao
+    public ClassificationDao getClassificationDao() throws SQLException{
+        if(classificationDao == null){
+            classificationDao = new ClassificationDao(getConnectionSource(), Classification.class);
+        }
+        return classificationDao;
+    }
+
+    //синглтон для EffectDao
+    public EffectDao getEffectDao() throws SQLException{
+        if(effectDao == null){
+            effectDao = new EffectDao(getConnectionSource(), Effect.class);
+        }
+        return effectDao;
+    }
+
+    //синглтон для HistoryDao
+    public HistoryDao getHistoryDao() throws SQLException{
+        if(historyDao == null){
+            historyDao = new HistoryDao(getConnectionSource(), History.class);
+        }
+        return historyDao;
+    }
+
+    //синглтон для ParamDao
+    public ParamDao getParamDao() throws SQLException{
+        if(paramDao == null){
+            paramDao = new ParamDao(getConnectionSource(), Param.class);
+        }
+        return paramDao;
+    }
+
+    //синглтон для PillDao
+    public PillDao getPillDao() throws SQLException{
+        if(pillDao == null){
+            pillDao = new PillDao(getConnectionSource(), Pill.class);
+        }
+        return pillDao;
+    }
+
+    //синглтон для UsePillDao
+    public UsePillDao getUsePillDao() throws SQLException{
+        if(usePillDao == null){
+            usePillDao = new UsePillDao(getConnectionSource(), UsePill.class);
+        }
+        return usePillDao;
+    }
+
     //выполняется при закрытии приложения
     @Override
     public void close(){
@@ -97,6 +195,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         userDao = null;
         achievementDao = null;
         userAchievementDao = null;
+        achievementConditionDao = null;
+        classificationDao = null;
+        effectDao = null;
+        historyDao = null;
+        paramDao = null;
+        paramValueDao = null;
+        pillDao = null;
+        usePillDao = null;
 //        roleDao = null;
     }
 }

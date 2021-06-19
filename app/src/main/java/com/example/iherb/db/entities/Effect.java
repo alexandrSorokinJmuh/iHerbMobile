@@ -14,4 +14,10 @@ public class Effect {
     String description;
     @DatabaseField(canBeNull = false, dataType = DataType.BOOLEAN)
     boolean isPositive;
+
+    public Effect(String name, String description, boolean isPositive) {
+        this.name = name;
+        this.description = description;
+        this.isPositive = isPositive;
+    }
 }

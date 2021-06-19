@@ -15,4 +15,10 @@ public class Pill {
     String description;
     @DatabaseField(foreign = true)
     Classification classification;
+
+    public Pill(String name, String description, Classification classification) {
+        this.name = name;
+        this.description = description;
+        this.classification = classification;
+    }
 }
