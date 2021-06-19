@@ -238,6 +238,7 @@
                 android:layout_margin="25sp"
                 android:layout_weight="1"
                 android:background="#00FFFFFF"
+                android:onClick="goToAchievements"
                 app:srcCompat="@drawable/icons8__926" />
 
             <ImageButton
