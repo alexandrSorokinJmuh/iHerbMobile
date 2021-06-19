@@ -42,6 +42,7 @@ public class NotificationCreator {
             notificationBuilder.setContentText(description);
         }
         notificationBuilder
+                .setAutoCancel(true)
                 .setBadgeIconType(R.drawable.ic_launcher_foreground);
 
         Notification notification = notificationBuilder.build();

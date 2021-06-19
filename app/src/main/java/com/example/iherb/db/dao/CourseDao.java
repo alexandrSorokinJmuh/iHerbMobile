@@ -22,7 +22,7 @@ public class CourseDao implements Serializable {
 
     public Course getById(String id) {
         String table = String.format("%s as c", tableName);
-        String[] columns = {"c.id as id", "c.name as name", "c.description as description", "c.days as days"};
+        String[] columns = {"c.id as id", "c.name as name", "c.description as description", "c.days as days", "c.param_id as param_id"};
         String selection = "c.id = ?";
         String[] selectionArgs = {id};
         Cursor c = db.query(table, columns, selection, selectionArgs, null, null, "id");
@@ -37,6 +37,7 @@ public class CourseDao implements Serializable {
             course.setName(c.getString(c.getColumnIndex("name")));
             course.setDescription(c.getString(c.getColumnIndex("description")));
             course.setDays(c.getInt(c.getColumnIndex("days")));
+            course.setParam_id(c.getInt(c.getColumnIndex("param_id")));
 
         }
         c.close();
@@ -49,6 +50,7 @@ public class CourseDao implements Serializable {
         cv.put("name", course.getName());
         cv.put("description", course.getDescription());
         cv.put("days", course.getDays());
+        cv.put("param_id", course.getParam_id());
         return db.insert(tableName, null, cv);
     }
 
