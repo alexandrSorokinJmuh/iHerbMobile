@@ -1,24 +1,30 @@
 package com.example.iherb.db.entities;
 
+import com.example.iherb.db.database.Column;
+import com.example.iherb.db.database.Entity;
 import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName = "pill")
-public class Pill {
-    @DatabaseField(generatedId = true)
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class Pill extends Entity {
+    @Column(type = "integer primary key autoincrement")
     private int Id;
 
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING)
+    @Column
     String name;
-    @DatabaseField(canBeNull = false, dataType = DataType.STRING)
+    @Column
     String description;
-    @DatabaseField(foreign = true)
-    Classification classification;
+    @Column(type = "integer", reference = "FOREIGN KEY (classification_id) REFERENCES classification(id)")
+    Integer classification_id;
 
-    public Pill(String name, String description, Classification classification) {
+    public Pill(String name, String description, Integer classification_id) {
         this.name = name;
         this.description = description;
-        this.classification = classification;
+        this.classification_id = classification_id;
     }
 }
