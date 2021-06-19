@@ -9,6 +9,9 @@ import com.example.iherb.db.dao.AchievementDao;
 import com.example.iherb.db.dao.ClassificationDao;
 import com.example.iherb.db.dao.ContraindicationDao;
 import com.example.iherb.db.dao.ContraindicationPillDao;
+import com.example.iherb.db.dao.CourseDao;
+import com.example.iherb.db.dao.CoursePillDao;
+import com.example.iherb.db.dao.CourseUserDao;
 import com.example.iherb.db.dao.EffectDao;
 import com.example.iherb.db.dao.EffectPillDao;
 import com.example.iherb.db.dao.HistoryDao;
@@ -48,6 +51,9 @@ public class HelperFactory{
         databaseHelper.setUsePillDao(new UsePillDao(db));
         databaseHelper.setUserAchievementDao(new UserAchievementDao(db));
         databaseHelper.setUserDao(new UserDao(db));
+        databaseHelper.setCourseDao(new CourseDao(db));
+        databaseHelper.setCoursePillDao(new CoursePillDao(db));
+        databaseHelper.setCourseUserDao(new CourseUserDao(db));
         databaseHelper.addStartValues();
     }
     public static void releaseHelper(){

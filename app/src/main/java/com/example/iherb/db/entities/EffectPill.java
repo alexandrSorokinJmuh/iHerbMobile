@@ -17,5 +17,8 @@ public class EffectPill extends Entity {
     @Column(type = "integer", reference = "FOREIGN KEY (effect_id) REFERENCES effect(id), primary key (pill_id, effect_id)")
     Integer effect_id;
 
-
+    public EffectPill(Integer pill_id, Integer effect_id) {
+        this.pill_id = pill_id;
+        this.effect_id = effect_id;
+    }
 }

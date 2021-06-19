@@ -12,6 +12,9 @@ import com.example.iherb.db.dao.AchievementDao;
 import com.example.iherb.db.dao.ClassificationDao;
 import com.example.iherb.db.dao.ContraindicationDao;
 import com.example.iherb.db.dao.ContraindicationPillDao;
+import com.example.iherb.db.dao.CourseDao;
+import com.example.iherb.db.dao.CoursePillDao;
+import com.example.iherb.db.dao.CourseUserDao;
 import com.example.iherb.db.dao.EffectDao;
 import com.example.iherb.db.dao.EffectPillDao;
 import com.example.iherb.db.dao.HistoryDao;
@@ -27,6 +30,9 @@ import com.example.iherb.db.entities.AchievementCondition;
 import com.example.iherb.db.entities.Classification;
 import com.example.iherb.db.entities.Contraindication;
 import com.example.iherb.db.entities.ContraindicationPill;
+import com.example.iherb.db.entities.Course;
+import com.example.iherb.db.entities.CoursePill;
+import com.example.iherb.db.entities.CourseUser;
 import com.example.iherb.db.entities.Effect;
 import com.example.iherb.db.entities.EffectPill;
 import com.example.iherb.db.entities.History;
@@ -69,6 +75,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private ContraindicationDao contraindicationDao = null;
     private ContraindicationPillDao contraindicationPillDao = null;
     private EffectPillDao effectPillDao = null;
+    private CourseDao courseDao = null;
+    private CoursePillDao coursePillDao = null;
+    private CourseUserDao courseUserDao = null;
+
+    public CourseDao getCourseDao() {
+        return courseDao;
+    }
+
+    public void setCourseDao(CourseDao courseDao) {
+        this.courseDao = courseDao;
+    }
+
+    public CoursePillDao getCoursePillDao() {
+        return coursePillDao;
+    }
+
+    public void setCoursePillDao(CoursePillDao coursePillDao) {
+        this.coursePillDao = coursePillDao;
+    }
+
+    public CourseUserDao getCourseUserDao() {
+        return courseUserDao;
+    }
+
+    public void setCourseUserDao(CourseUserDao courseUserDao) {
+        this.courseUserDao = courseUserDao;
+    }
+
     private SQLiteDatabase db;
 
     public DatabaseHelper(Context context){
@@ -92,10 +126,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(TableResolver.getSqlCreateTableString(UsePill.class));
         db.execSQL(TableResolver.getSqlCreateTableString(User.class));
         db.execSQL(TableResolver.getSqlCreateTableString(UserAchievement.class));
-
-
-
-
+        db.execSQL(TableResolver.getSqlCreateTableString(Course.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(CoursePill.class));
+        db.execSQL(TableResolver.getSqlCreateTableString(CourseUser.class));
 
     }
 
@@ -254,6 +287,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contraindicationDao = null;
         contraindicationPillDao = null;
         effectPillDao = null;
+        courseDao = null;
+        coursePillDao = null;
+        courseUserDao = null;
+
     }
 
 
