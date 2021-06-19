@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = HelperFactory.getHelper();
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        view = findViewById(R.id.constraint);
         notificationCreator =
                 new NotificationCreator(notificationManager, "test_channel_id", "channel_name", "channel_description");
 
