@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         DatabaseHelper databaseHelper = HelperFactory.getHelper();
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationCreator =
-                new NotificationCreator(notificationManager, "test_channel_id", "channel_name", "channel_description");
+        notificationCreator = new NotificationCreator(notificationManager, "achievements", "Достижения",
+                "Достижения приложения");
         addWeightLayout = findViewById(R.id.addWeightLayout);
         addPulseLayout = findViewById(R.id.addPulseLayout);
         weightEditText = findViewById(R.id.weightNumber);

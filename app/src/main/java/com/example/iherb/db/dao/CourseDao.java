@@ -46,7 +46,7 @@ public class CourseDao implements Serializable {
 
     public long create(Course course) {
         ContentValues cv = new ContentValues();
-        cv.put("id", course.getId());
+//        cv.put("id", course.getId());
         cv.put("name", course.getName());
         cv.put("description", course.getDescription());
         cv.put("days", course.getDays());

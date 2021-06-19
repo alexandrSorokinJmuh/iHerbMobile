@@ -46,7 +46,7 @@ public class ParamValueDao implements Serializable {
 
     public long create(ParamValue paramValue) {
         ContentValues cv = new ContentValues();
-        cv.put("id", paramValue.getId());
+//        cv.put("id", paramValue.getId());
         cv.put("value", paramValue.getValue());
         return db.insert(tableName, null, cv);
     }

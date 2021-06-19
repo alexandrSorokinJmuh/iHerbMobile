@@ -50,7 +50,6 @@ public class ParamDao implements Serializable {
 
     public long create(Param param) {
         ContentValues cv = new ContentValues();
-        cv.put("id", param.getId());
         cv.put("name", param.getName());
         cv.put("description", param.getDescription());
         return db.insert(tableName, null, cv);

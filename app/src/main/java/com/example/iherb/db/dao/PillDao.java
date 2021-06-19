@@ -48,7 +48,7 @@ public class PillDao implements Serializable {
 
     public long create(Pill pill) {
         ContentValues cv = new ContentValues();
-        cv.put("id", pill.getId());
+//        cv.put("id", pill.getId());
         cv.put("name", pill.getName());
         cv.put("description", pill.getDescription());
         cv.put("classification_id", pill.getClassification_id());

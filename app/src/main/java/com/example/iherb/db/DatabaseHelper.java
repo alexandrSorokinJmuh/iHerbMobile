@@ -137,13 +137,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         paramList.add(new Param("weight", "user weight"));
         paramList.add(new Param("pulse", "user pulse"));
         paramList.add(new Param("height", "user height"));
+        paramList.add(new Param("courseVisited", "course visited"));
+        paramList.add(new Param("pillDescriptionVisited", "pill description visited"));
+        paramList.add(new Param("userScore", "user score"));
+
+        List<Achievement> achievementList = new ArrayList<>();
+        achievementList.add(new Achievement("Добро пожаловать", "Вы успешно зарегестрировались в приложении", 5));
+
 
         List<Classification> classificationList = new ArrayList<>();
         classificationList.add(new Classification("нутрицевтики", "комбинированные средства, прием которых показан при дефиците полезных веществ и спровоцированных им сбоях в работе организма, а также для ускорения эвакуации чужеродных органических и неорганических соединений"));
         classificationList.add(new Classification("парафармацевтики", "биоактивные добавки, используемые для повышения умственной и физической работоспособности, укрепления иммунитета"));
         classificationList.add(new Classification("эубиотики", "БАД, содержащие живые культуры бактерий и (или) питательный субстрат для них, применяемые для восстановления микробиоценоза кишечника и тд."));
 
-
+        for (Achievement achievement : achievementList)
+            getAchievementDao().create(achievement);
         for (Param param : paramList)
             getParamDao().create(param);
 

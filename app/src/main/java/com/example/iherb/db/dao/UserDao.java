@@ -58,7 +58,7 @@ public class UserDao implements Serializable {
 
     public long create(User user) {
         ContentValues cv = new ContentValues();
-        cv.put("id", user.getId());
+//        cv.put("id", user.getId());
         cv.put("firstName", user.getFirstName());
         cv.put("lastName", user.getLastName());
         cv.put("dateOfBirth", user.getDateOfBirth());

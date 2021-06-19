@@ -48,7 +48,7 @@ public class EffectDao implements Serializable {
 
     public long create(Effect effect) {
         ContentValues cv = new ContentValues();
-        cv.put("id", effect.getId());
+//        cv.put("id", effect.getId());
         cv.put("name", effect.getName());
         cv.put("description", effect.getDescription());
         cv.put("positive", effect.getPositive());
