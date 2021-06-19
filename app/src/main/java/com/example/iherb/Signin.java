@@ -15,38 +15,39 @@ import java.util.List;
 
 public class Signin extends AppCompatActivity {
 
-        User user;
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-            HelperFactory.setHelper(this);
-            DatabaseHelper databaseHelper = HelperFactory.getHelper();
+    User user;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.sign_in_layout);
+        HelperFactory.setHelper(this);
+        DatabaseHelper databaseHelper = HelperFactory.getHelper();
+    }
+
+    public void signinButtonClick(View view) {
+        EditText login = (EditText) findViewById(R.id.editTextLoginSignin);
+        EditText password = (EditText) findViewById(R.id.editTextPasswordSignin);
+
+        User loginingUser = null;
+        try {
+            loginingUser = HelperFactory.getHelper().getUserDao().getUserByLogin(login.getText().toString());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        public void signinButtonClick(View view) {
-            EditText login = (EditText)findViewById(R.id.editTextLoginSignin);
-            EditText password = (EditText)findViewById(R.id.editTextPasswordSignin);
-
-            User loginingUser = null;
+        if (loginingUser != null) {
             try {
-                loginingUser = HelperFactory.getHelper().getUserDao().getUserByLogin(login.getText().toString());
+                user = HelperFactory.getHelper().getUserDao().getUserByLoginAndPass(login.getText().toString(), password.getText().toString());
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
-            if(loginingUser != null) {
-                try {
-                   user = HelperFactory.getHelper().getUserDao().getUserByLoginAndPass(login.getText().toString(), password.getText().toString());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                user = loginingUser;
-            }else return;
+            user = loginingUser;
+        } else return;
 
 
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("User", user);
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("User", user);
+        startActivity(intent);
+    }
 }
