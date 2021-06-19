@@ -10,16 +10,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.IHerb">
         <activity android:name=".Calendar"></activity>
-        <activity android:name=".EntryActivity"></activity>
-        <activity android:name=".Main3Activity" />
-        <activity android:name=".Register" />
-        <activity android:name=".Signin" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".EntryActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".Main3Activity" />
+        <activity android:name=".Register" />
+        <activity android:name=".Signin" />
+        <activity android:name=".MainActivity">
+
         </activity>
 
         <meta-data
