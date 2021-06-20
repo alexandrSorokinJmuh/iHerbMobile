@@ -98,7 +98,7 @@ public class Register extends AppCompatActivity {
         Achievement achievement = HelperFactory.getHelper().getAchievementDao().getByName("Добро пожаловать");
         UserAchievement userAchievement = new UserAchievement(userId, achievement.getId(), 1);
         HelperFactory.getHelper().getUserAchievementDao().create(userAchievement);
-        notificationCreator.createNotification(this, achievement.getName(), achievement.getDescription(), 1);
+        notificationCreator.createNotification(this, achievement.getName(), achievement.getDescription(), R.mipmap.ic_prop1_round,1);
         intent.putExtra("user", user);
         startActivity(intent);
     }

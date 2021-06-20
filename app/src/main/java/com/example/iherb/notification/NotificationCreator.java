@@ -33,7 +33,7 @@ public class NotificationCreator {
         }
     }
 
-    public void createNotification(Context context, String header, String description, int notificationId){
+    public void createNotification(Context context, String header, String description, int ic_resource, int notificationId){
 
 //        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
 //                .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -55,13 +55,13 @@ public class NotificationCreator {
 //        notificationManager.notify(notificationId, notification);
 
         RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.custom_push);
-        contentView.setImageViewResource(R.id.image, R.mipmap.ic_prop1_round);
+        contentView.setImageViewResource(R.id.image, ic_resource);
         contentView.setTextViewText(R.id.title, header);
         contentView.setTextViewText(R.id.text, description);
 
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.mipmap.ic_prop1_round)
+                .setSmallIcon(ic_resource)
                 .setContent(contentView);
 
 
@@ -71,7 +71,7 @@ public class NotificationCreator {
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.defaults |= Notification.DEFAULT_SOUND;
         notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notificationManager.notify(1, notification);
+        notificationManager.notify(notificationId, notification);
 
     }
 

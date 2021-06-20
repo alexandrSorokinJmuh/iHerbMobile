@@ -19,12 +19,12 @@ public class EntryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_entry);
         HelperFactory.setHelper(this);
         DatabaseHelper databaseHelper = HelperFactory.getHelper();
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        NotificationCreator notificationCreator = new NotificationCreator(notificationManager, "achievements", "Достижения",
-                "Достижения приложения");
-        Achievement achievement = HelperFactory.getHelper().getAchievementDao().getByName("Добро пожаловать");
-        notificationCreator.createNotification(this, achievement.getName(), achievement.getDescription(), 1);
+//        NotificationManager notificationManager =
+//                (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+//        NotificationCreator notificationCreator = new NotificationCreator(notificationManager, "achievements", "Достижения",
+//                "Достижения приложения");
+//        Achievement achievement = HelperFactory.getHelper().getAchievementDao().getByName("Добро пожаловать");
+//        notificationCreator.createNotification(this, achievement.getName(), achievement.getDescription(), R.mipmap.ic_prop1_round,1);
     }
 
     public void buttonEnterRegistryClick(View view) {

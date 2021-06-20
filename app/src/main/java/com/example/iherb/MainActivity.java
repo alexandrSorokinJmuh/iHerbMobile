@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showNotification(View view){
-        notificationCreator.createNotification(this, "header", "description", 1);
+        notificationCreator.createNotification(this, "header", "description", R.mipmap.ic_prop1_round,1);
     }
 
     public void showAddWeight(View view){
