@@ -45,10 +45,30 @@ public class AchievementDao implements Serializable {
         c.close();
         return achievement;
     }
+    public Achievement getByName(String name) {
+        String table = String.format("%s as ach", tableName);
+        String[] columns = {"ach.id as id", "ach.name as name", "ach.description as description", "ach.score as score"};
+        String selection = "ach.name = ?";
+        String[] selectionArgs = {name};
+        Cursor c = db.query(table, columns, selection, selectionArgs, null, null, "id");
 
+
+        // ставим позицию курсора на первую строку выборки
+        // если в выборке нет строк, вернется false
+        Achievement achievement = null;
+        if (c.moveToFirst()) {
+            achievement = new Achievement();
+            achievement.setId(c.getInt(c.getColumnIndex("id")));
+            achievement.setName(c.getString(c.getColumnIndex("name")));
+            achievement.setDescription(c.getString(c.getColumnIndex("description")));
+            achievement.setScore(c.getInt(c.getColumnIndex("score")));
+        }
+        c.close();
+        return achievement;
+    }
     public long create(Achievement achievement) {
         ContentValues cv = new ContentValues();
-        cv.put("id", achievement.getId());
+//        cv.put("id", achievement.getId());
         cv.put("name", achievement.getName());
         cv.put("description", achievement.getDescription());
         cv.put("score", achievement.getScore());

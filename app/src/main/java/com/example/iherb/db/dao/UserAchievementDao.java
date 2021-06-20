@@ -3,8 +3,11 @@ package com.example.iherb.db.dao;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.example.iherb.db.database.TableResolver;
+import com.example.iherb.db.entities.Achievement;
 import com.example.iherb.db.entities.UsePill;
 import com.example.iherb.db.entities.User;
 import com.example.iherb.db.entities.UserAchievement;
@@ -15,6 +18,7 @@ import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class UserAchievementDao implements Serializable {
 
@@ -24,6 +28,20 @@ public class UserAchievementDao implements Serializable {
     public UserAchievementDao(SQLiteDatabase db) {
         this.db = db;
         tableName = TableResolver.getTableName(UserAchievement.class);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<UserAchievement> getSuccessByUserId(String id){
+        return getByUserId(id).stream()
+                .filter(userAchievement -> userAchievement.getDateSuccess() != null)
+                .collect(Collectors.toList());
+    }
+    
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<UserAchievement> getUnSuccessByUserId(String id){
+        return getByUserId(id).stream()
+                .filter(userAchievement -> userAchievement.getDateSuccess() == null)
+                .collect(Collectors.toList());
     }
 
     public List<UserAchievement> getByUserId(String id) {

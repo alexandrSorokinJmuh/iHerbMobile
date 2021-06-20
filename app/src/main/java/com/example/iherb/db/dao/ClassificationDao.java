@@ -47,7 +47,7 @@ public class ClassificationDao implements Serializable {
     }
     public long create(Classification classification) {
         ContentValues cv = new ContentValues();
-        cv.put("id", classification.getId());
+//        cv.put("id", classification.getId());
         cv.put("name", classification.getName());
         cv.put("description", classification.getDescription());
         return db.insert(tableName, null, cv);
