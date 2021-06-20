@@ -28,100 +28,162 @@
         android:textAlignment="center"
         android:textSize="20sp" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="349dp"
+        android:layout_height="237dp"
+        android:layout_gravity="center"
+        android:background="@drawable/shape"
+        android:gravity="center|fill"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF788811"
+                android:text="ЛОГИН" />
+
+            <EditText
+                android:id="@+id/editTextFirstName"
+                android:layout_width="254dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape2"
+                android:ems="10"
+                android:inputType="textPersonName" />
+        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#94A71B"
-            android:fadingEdge="horizontal|vertical"
+            android:layout_height="14dp"
             android:orientation="vertical">
-            <LinearLayout
-                android:layout_width="match_parent"
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FirsrtName"/>
-            <EditText
-                android:id="@+id/editTextFirstName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="First Name"
-                android:background="@color/white"
-                android:inputType="textPersonName" />
-            </LinearLayout>
+                android:background="#FF788811"
+                android:text="ПАРОЛЬ" />
+
             <EditText
                 android:id="@+id/editTextLastName"
-                android:layout_width="match_parent"
+                android:layout_width="246dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/shape2"
                 android:ems="10"
-                android:hint="Last Name"
-                android:inputType="textPersonName" />
+                android:inputType="none|textPassword" />
 
-            <EditText
-                android:id="@+id/editTextLoginRegister"
-                android:layout_width="match_parent"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textPersonName" />
-
-
-            <EditText
-                android:id="@+id/editTextPasswordRegister"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword" />
-
-            <EditText
-                android:id="@+id/editTextDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
-
-            <EditText
-                android:id="@+id/editTextSex"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="Sex"
-                android:inputType="textPersonName" />
+                android:background="#FF788811"
+                android:text="РОСТ" />
 
             <EditText
                 android:id="@+id/editTextHeight"
-                android:layout_width="match_parent"
+                android:layout_width="121dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/shape2"
                 android:ems="10"
-                android:hint="Height"
+
                 android:inputType="textPersonName"
                 android:maxLength="3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF788811"
+                android:text="  ВЕС" />
 
             <EditText
                 android:id="@+id/editTextWeight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/shape2"
                 android:ems="10"
-                android:hint="Weight"
                 android:inputType="textPersonName"
                 android:maxLength="3" />
 
-        </LinearLayout>
-    </ScrollView>
 
-    <Button
-        android:id="@+id/buttonRegister"
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="310dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/shape1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#FF788811"
+                android:text="ДАТА РОЖДЕНИЯ" />
+
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape2"
+                android:ems="10"
+                android:inputType="date" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton11"
+        android:layout_width="197dp"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="#00FFFFFF"
         android:onClick="registerButtonClick"
-        android:text="Button" />
+        app:srcCompat="@drawable/button" />
 
 
 </LinearLayout>

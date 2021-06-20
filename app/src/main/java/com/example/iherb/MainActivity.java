@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         weightEditText = findViewById(R.id.weightNumber);
         pulseEditText = findViewById(R.id.pulseNumber);
         user = new User("алёша", "помоги", 233123, "asd", "asd", "м");
-        user = (User)this.getIntent().getSerializableExtra("user");
+        //user = (User)this.getIntent().getSerializableExtra("user");
 
     }
 

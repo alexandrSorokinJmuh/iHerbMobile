@@ -34,11 +34,11 @@
             app:srcCompat="@drawable/_2252545985685" />
     </LinearLayout>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <ImageButton
             android:id="@+id/imageButton8"
             android:layout_width="200dp"
@@ -61,6 +61,7 @@
             android:background="#00FFFFFF"
             android:onClick="buttonEnterSigninClick"
             app:srcCompat="@drawable/button2" />
+
 
     </LinearLayout>
 </LinearLayout>

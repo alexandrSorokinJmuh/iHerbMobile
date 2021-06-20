@@ -25,7 +25,7 @@ import java.util.Date;
 public class Register extends AppCompatActivity {
     EditText firstName;
     EditText lastName;
-    CalendarView birthDateCalendar;
+    EditText Date;
     EditText login;
     EditText password;
     EditText sex;
@@ -41,20 +41,25 @@ public class Register extends AppCompatActivity {
         DatabaseHelper databaseHelper = HelperFactory.getHelper();
 
         firstName = findViewById(R.id.editTextFirstName);
-        lastName = findViewById(R.id.editTextLastName);
-        birthDateCalendar = findViewById(R.id.calendarViewDateOFBirth);
-        login = findViewById(R.id.editTextLoginRegister);
-        password = findViewById(R.id.editTextPasswordRegister);
-        sex = findViewById(R.id.editTextSex);
+        lastName = findViewById(R.id.editTextFirstName);
+        login = findViewById(R.id.editTextFirstName);
+        password = findViewById(R.id.editTextLastName);
+        Date = findViewById(R.id.editTextDate);
         height = findViewById(R.id.editTextHeight);
         weight = findViewById(R.id.editTextWeight);
+        sex = findViewById(R.id.editTextFirstName);
 
     }
 
-    public void registerButtonClick(View view) {
-        int date = (int) birthDateCalendar.getDate();
+    public void registerButtonClick(View view) throws ParseException {
+        Date date = null;
+        try {
+            date = HelperFactory.getDateFromString(Date.getText().toString());
+        } catch (ParseException e) {
+            throw e;
+        }
 
-        User user = new User(firstName.getText().toString(), lastName.getText().toString(), date, login.getText().toString(), password.getText().toString(), sex.getText().toString());
+        User user = new User(firstName.getText().toString(), lastName.getText().toString(), (int)date.getTime(), login.getText().toString(), password.getText().toString(), sex.getText().toString());
 
 
         int userId = -1;
